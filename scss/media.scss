@@ -1,0 +1,85 @@
+@import "bourbon";
+
+// Main vars
+$body-bg                  :  #f8f8f8;
+$links-size               :  80px;
+$links-bg                 :  #1B1725;
+$links-color              :  #fff;
+$circle-transition        :  ease;
+$circle-scale             :  1.6;
+$icon-font-size           :  40px;
+$icon-transition          :  cubic-bezier(0.694,  0.048, 0.335, 1.000);
+$icon-transition-duration :  0.5s;
+
+// Only for demo purposes
+* {
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+  background: $body-bg;
+}
+.links-container {
+  width: 100%;
+  margin: 100px auto;
+}
+
+// This is the code
+.contact-links {
+  width: 100%;
+  text-align: center;
+  > li {
+    display: inline-block;
+    padding: 15px;
+    a {
+      position: relative;
+      text-decoration: none;
+      background: $links-bg;
+      display: block;
+      @include size($links-size);
+      border-radius: 50%;
+      &:before {
+        content: "";
+        position: absolute;
+        top: 7%;
+        left: 7%;
+        width: 85%;
+        height: 85%;
+        opacity: 0.8;
+        border: 1px solid $links-bg;
+        border-radius: 50%;
+        transition: opacity 0.4s ease, transform 0.5s $circle-transition;
+      }
+      .no-touch &:hover {
+        &:before {
+          opacity: 0;
+          transform: scale($circle-scale);
+        }
+        span.fa{ @include animation($icon-transition-duration slide-icon $icon-transition 0s);}
+      }
+      &:focus {
+        opacity: 0.85;
+      }
+      span {
+        font-size: em($icon-font-size);
+        line-height: $links-size;
+        color: $links-color;
+      }
+    }
+  }
+}
+
+// Icon span animation
+@include keyframes(slide-icon){
+  49% { 
+    transform: translateX(-($links-size)); 
+    opacity:0;
+  }
+  50%{
+    transform: translateX($links-size);
+  }
+  80%{
+    transform: translateX(0);
+    opacity:1;
+  }
+}
